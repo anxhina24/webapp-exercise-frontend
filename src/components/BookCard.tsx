@@ -1,9 +1,9 @@
 import React from "react";
-import {Card, Image, Typography, Rate, Button} from "antd";
+import {Card, Typography, Button} from "antd";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import {BookDataType} from "../utils/dataTypes";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 interface BookCardProps {
     book: BookDataType;

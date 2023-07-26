@@ -35,7 +35,6 @@ export interface GeneralModalRef{
 const GeneralModal = React.forwardRef<GeneralModalRef, GeneralModalProps>((props, ref) => {
     const [visible, setVisible] = useState(false);
     const [dialogMessage, setDialogMessage] = useState('');
-    const [dialogTitle, setDialogTitle] = useState('');
     const [icon, setIcon] = useState('');
     const [color, setColor] = useState('');
     const handleCancel = async () => {
