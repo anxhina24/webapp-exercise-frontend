@@ -1,0 +1,42 @@
+
+.confirmationModal .ant-modal-content {
+    padding: 10px;
+    border-radius: 20px;
+    border: red solid 10px;
+}
+
+.confirmationModal .ant-modal-footer {
+    /* Additional styles for the modal footer */
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    border-top: none;
+}
+
+.generalModal .ant-modal-content {
+    padding: 10px;
+    border-radius: 20px;
+    border: #b0c6b1 solid 10px;
+}
+
+.generalModal .ant-modal-footer {
+    /* Additional styles for the modal footer */
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    border-top: none;
+}
+
+.addNewBookModal .ant-modal-content {
+    padding: 10px;
+    border-radius: 20px;
+    border: #b0c6b1 solid 10px;
+}
+
+.addNewBookModal .ant-modal-footer {
+    /* Additional styles for the modal footer */
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    border-top: none;
+}
