@@ -8,6 +8,7 @@ import GeneralModal, {GeneralModalRef} from '../modals/general';
 import AddNewBookForm from './AddNewBookForm';
 
 const BookList: React.FC = () => {
+  // state variables
   const itemsPerPage = 5; // Set the number of books to show per page
   const [books, setBooks] = useState<BookDataType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -17,6 +18,8 @@ const BookList: React.FC = () => {
   const generalModalRef = useRef<GeneralModalRef>(null);
   const [showAddNewDialog, setShowNewBookDialog] = useState(false);
   const [book, setBook] = useState<BookDataType | null>(null);
+
+  //Function to handle fetching the list of books
   const handleBooksList = useCallback(async () => {
     try {
       const response = await BookServices.getAll(currentPage, itemsPerPage, searchQuery);
@@ -31,26 +34,32 @@ const BookList: React.FC = () => {
     handleBooksList();
   }, [handleBooksList]);
 
+  //Function to handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  //Function to handle search input change
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
+  //Function to open Add New Book dialog
   const handelNewBook = async () => {
     setShowNewBookDialog(true);
   };
+
+  //Function to handle book deletiona
   const handleDelete = (id: number) => {
     if (confirmationModalRef.current) {
       confirmationModalRef.current.openModal(
-        'Book Deletion',
         'Are you sure you want to delete this book? ',
         id,
       );
     }
   };
 
+  //Function to confirm book deletion
   const confirmOperation = (id: number) => {
     BookServices.delete(id)
       .then((res) => {
@@ -69,14 +78,18 @@ const BookList: React.FC = () => {
         }
       });
   };
+
+  //Function to handle book update
   const handleUpdate = (book: BookDataType | null) => {
     setShowNewBookDialog(true);
     setBook(book); // Update to 'book' or set to 'null'
   };
+
+  //Function to handle book add/update completed
   const handleBookAdded = async () => {
     await handleBooksList();
   };
-
+  //Return JSX for BookList component
   return (
     <div style={{padding: '16px', border: '1px solid #ccc', marginBottom: '16px'}}>
       <Row gutter={[16, 16]} justify='space-between' align='middle' style={{marginBottom: 20}}>

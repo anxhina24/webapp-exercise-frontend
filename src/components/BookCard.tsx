@@ -4,12 +4,20 @@ import {BookDataType} from '../utils/dataTypes';
 
 const {Title, Text} = Typography;
 
+//Props interface for BookCard component
 interface BookCardProps {
+  /**
+   * book component contains book details
+   * Function to handel delete action for a book.
+   * Function to handle update action for a book
+   *
+   */
   book: BookDataType;
   handleDelete: (bookId: number) => void;
   handleUpdate: (book: BookDataType) => void;
 }
 const BookCard: React.FC<BookCardProps> = ({book, handleDelete, handleUpdate}) => {
+  //Return JSX for BookCard component
   return (
     <Card
       key={book.id}

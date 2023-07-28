@@ -7,12 +7,21 @@ import {convertKeysToSnakeCase} from '../utils/snakeCase';
 import '../style/style.css';
 
 type FormProps = {
+  /**
+   * boolean value indicating if the modal is hide or visible
+   * Function to close dialog and to handle onClose event
+   * Function to handle the action when a new book is added or updated
+   * Object for the book to be updated. It is null when a new book is added, and it has BookDataType type when a existing book is updated.
+   */
   visible: boolean;
   onClose: () => void;
   onBookAdded: () => void;
   bookObjectToBeUpdated: BookDataType | null;
 };
+
+//Form for adding or updating a book.
 const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: FormProps) => {
+  //Local state to manage form fields and errors.
   const currentYear = new Date().getFullYear();
   const generalModalRef = useRef<GeneralModalRef>(null);
   const [titleRequired, setTitleRequired] = useState(false);
@@ -34,10 +43,13 @@ const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: 
   const [mediumCoverRequired, setMediumCoverRequired] = useState(false);
   const [smallCoverRequired, setSmallCoverRequired] = useState(false);
 
+  //Function to handle Save button clink on add/update modal.
   const handleOk = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      //Validate form fields before submitting.
       if (formValidation()) {
+        //Convert form data to snake_case and create book object
         const bookObject = convertKeysToSnakeCase({
           title,
           authorName,
@@ -49,12 +61,15 @@ const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: 
             smallCover,
           },
         });
+        //Call create or update service based on the bookObjectToBeUpdated value
         const result = bookObjectToBeUpdated
           ? await BookServices.update(bookObjectToBeUpdated.id, bookObject)
           : await BookServices.create(bookObject);
+        //If is created returned status will be 201, if is updated it will be 200.
         if ([200, 201].includes(result.status)) {
           if (generalModalRef.current) {
             onBookAdded();
+            //Dynamic message depending on operation(created or updated)
             generalModalRef.current.openModal(
               `Book ${bookObjectToBeUpdated ? 'updated' : 'created'} Successfully`,
             );
@@ -63,13 +78,16 @@ const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: 
         }
       }
     } catch (error) {
+      //If an error happen during the API call, show an error message with the general dialog.
       if (generalModalRef.current) {
         generalModalRef.current.openModal('An error occurred! Please try again later.');
       }
     }
   };
 
+  //Function for form field validation
   const formValidation = () => {
+    //Check for empty required fields. If any of this required fields is missing, return false and set the state of them. Otherwise, return true.
     if (
       !title ||
       !authorName ||
@@ -91,6 +109,7 @@ const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: 
     return true;
   };
 
+  //Function to clear form data when the book is created.
   const clearFormData = () => {
     setTitle('');
     setAuthor('');
@@ -139,6 +158,7 @@ const AddNewBookForm = ({visible, onClose, onBookAdded, bookObjectToBeUpdated}: 
     setSmallCoverRequired(false);
   };
 
+  //Return JSX from AddNewBookForm component
   return (
     <Modal
       title={<h2 className='customTitle'>Add new Book</h2>}

@@ -6,7 +6,7 @@
 }
 
 .confirmationModal .ant-modal-footer {
-    /* Additional styles for the modal footer */
+    /* Additional styles for the confirmation modal footer */
     display: flex;
     justify-content: flex-end;
     padding: 16px 24px;
@@ -20,7 +20,7 @@
 }
 
 .generalModal .ant-modal-footer {
-    /* Additional styles for the modal footer */
+    /* Additional styles for the general modal footer */
     display: flex;
     justify-content: flex-end;
     padding: 16px 24px;
@@ -34,7 +34,7 @@
 }
 
 .addNewBookModal .ant-modal-footer {
-    /* Additional styles for the modal footer */
+    /* Additional styles for the Add New Book modal footer */
     display: flex;
     justify-content: flex-end;
     padding: 16px 24px;

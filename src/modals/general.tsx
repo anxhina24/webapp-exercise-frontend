@@ -3,12 +3,16 @@ import {Button, Modal, Row} from 'antd';
 import '../style/style.css';
 
 type GeneralModalProps = {
+  //function to be called when the modal is closed.
   onClose?: () => void;
 };
 export interface GeneralModalRef {
+  //Function to open the modal with a specific message
   openModal: (message: string) => void;
 }
 const GeneralModal = React.forwardRef<GeneralModalRef, GeneralModalProps>((props, ref) => {
+
+  //State variables to manage visibility and the content of the modal
   const [visible, setVisible] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const handleCancel = async () => {
@@ -16,6 +20,7 @@ const GeneralModal = React.forwardRef<GeneralModalRef, GeneralModalProps>((props
     return Promise.resolve(); // Resolve a promise to fulfill the type requirements
   };
   useImperativeHandle(ref, () => ({
+    //Open the modal and update the content
     openModal(message: string) {
       setDialogMessage(message);
       setVisible(true);

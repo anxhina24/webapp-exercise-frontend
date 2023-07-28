@@ -3,13 +3,17 @@ import {Button, Modal, Row} from 'antd';
 import '../style/style.css';
 
 export type ConfirmationModalProps = {
+    //Function that will be called when the user confirm the operation. Value is the ID of record
   confirmOperation: (value: number) => void;
 };
 export interface ConfirmationModalRef {
-  openModal: (message: string, title: string, id: number) => void;
+    //Function to open confirmation modal. This function has a message and ID of record
+  openModal: (message: string, id: number) => void;
 }
 const ConfirmationModal = React.forwardRef<ConfirmationModalRef, ConfirmationModalProps>(
   (props, ref) => {
+
+      //State variable to manage visibility of the modal and the message on it
     const [visible, setVisible] = useState(false);
     const [dialogMessage, setDialogMessage] = useState('');
     const [itemId, setItemId] = useState(1);
@@ -19,13 +23,16 @@ const ConfirmationModal = React.forwardRef<ConfirmationModalRef, ConfirmationMod
       return Promise.resolve(); // Resolve a promise to fulfill the type requirements
     };
 
+    //This function is called when the user clicks confirm button on the modal.
+      //After confirmation, visibilities will be set to false
     const handleConfirm = async () => {
-      await props.confirmOperation(itemId); // Await the confirmOperation function to return a promise
+      await props.confirmOperation(itemId);
       setVisible(false);
     };
 
     useImperativeHandle(ref, () => ({
-      openModal(title: string, message: string, itemId: number) {
+        //Open the modal and update the content
+      openModal(message: string, itemId: number) {
         setDialogMessage(message);
         setVisible(true);
         setItemId(itemId);
